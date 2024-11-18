@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lsm_offer
+    password: lsm_offer123
+
+jwt:
+  secret: 2f0af0812b8833d148fca81f1de3e20fe99f4270077e34d293cfe81dd9d1be5b
+
+feign:
+  user:
+    url: http://localhost:8041

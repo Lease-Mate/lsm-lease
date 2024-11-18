@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0
+      author: fpamula
+      changes:
+        - createTable:
+            tableName: RENT
+            columns:
+              - column:
+                  name: id
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: owner_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: offer_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: request_date
+                  type: datetime
+                  constraints:
+                    nullable: false
