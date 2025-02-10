@@ -54,7 +54,7 @@ public class RentFacadeRepository implements RentRepository {
         var pageable = PageRequest.of(
                 pagination.getPage() - 1,
                 pagination.getSize(),
-                Sort.by(Sort.Direction.DESC, "requestedDate")
+                Sort.by(Sort.Direction.DESC, "requestDate")
         );
         return rentJpaRepository.findAll(spec, pageable)
                                 .stream().map(RentEntity::toRent)
