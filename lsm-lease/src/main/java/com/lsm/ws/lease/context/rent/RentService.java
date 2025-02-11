@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -92,5 +93,14 @@ public class RentService {
 
     public List<Rent> getUserRents() {
         return rentRepository.findByUserIdAndStatus(requestContext.userId(), RentStatus.ACTIVE);
+    }
+
+    public List<Rent> getUserRequests() {
+        return rentRepository.findByUserIdAndStatuses(requestContext.userId(),
+                Set.of(RentStatus.REQUESTED, RentStatus.REJECTED_REQUEST));
+    }
+
+    public List<Rent> getOwnerRequests() {
+        return rentRepository.findByOwnerIdAndStatus(requestContext.userId(), RentStatus.REQUESTED);
     }
 }

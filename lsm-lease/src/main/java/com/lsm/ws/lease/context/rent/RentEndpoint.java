@@ -76,4 +76,20 @@ public class RentEndpoint {
         var rents = rentService.getUserRents();
         return ResponseEntity.ok(rents);
     }
+
+    @Operation(summary = "Get user requests", description = "Returns user requests to rent")
+    @GetMapping("/request")
+    public ResponseEntity<List<Rent>> getUserRequests() {
+
+        var requests = rentService.getUserRequests();
+        return ResponseEntity.ok(requests);
+    }
+
+    @Operation(summary = "Get owner requests", description = "Returns rent requests for owner")
+    @GetMapping("/request/owner")
+    public ResponseEntity<List<Rent>> getOwnerRequests() {
+
+        var requests = rentService.getOwnerRequests();
+        return ResponseEntity.ok(requests);
+    }
 }

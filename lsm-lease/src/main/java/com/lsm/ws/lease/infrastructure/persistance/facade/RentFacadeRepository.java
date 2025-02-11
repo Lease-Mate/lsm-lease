@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class RentFacadeRepository implements RentRepository {
@@ -71,6 +72,15 @@ public class RentFacadeRepository implements RentRepository {
     }
 
     @Override
+    public List<Rent> findByUserIdAndStatuses(String userId, Set<RentStatus> statuses) {
+        var spec = Specification.where(hasUserId(userId))
+                                .and(hasStatus(statuses));
+        return rentJpaRepository.findAll(spec)
+                                .stream().map(RentEntity::toRent)
+                                .toList();
+    }
+
+    @Override
     public List<Rent> findByOwnerIdAndStatus(String ownerId, RentStatus status) {
         var spec = Specification.where(hasOwnerId(ownerId))
                                 .and(hasStatus(status));
@@ -93,5 +103,9 @@ public class RentFacadeRepository implements RentRepository {
 
     private Specification<RentEntity> hasOfferId(String offerId) {
         return (root, query, cb) -> cb.equal(root.get("offerId"), offerId);
+    }
+
+    private Specification<RentEntity> hasStatus(Set<RentStatus> statuses) {
+        return (root, query, cb) -> root.get("status").in(statuses);
     }
 }
