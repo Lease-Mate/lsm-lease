@@ -81,7 +81,7 @@ public class RentService {
                       });
 
         var rent = rentRepository.findById(rentId)
-                                 .filter(Rent::isEligibleToAccept)
+                                 .filter(Rent::isRequested)
                                  .orElseThrow(NoSuchRentRequestException::new);
 
         rent.setStatus(RentStatus.ACTIVE);
@@ -114,11 +114,25 @@ public class RentService {
         var rent = rentRepository.findById(rentId)
                                  .orElseThrow(NoSuchRentRequestException::new);
 
-        if (!rent.isEligibleToAccept()) {
+        if (!rent.isRequested()) {
             throw new CantRejectRentRequestException();
         }
 
         rent.setStatus(RentStatus.REJECTED_REQUEST);
+        rentRepository.save(rent);
+    }
+
+    public void revoke(String rentId) {
+        var rent = rentRepository.findById(rentId)
+                                 .orElseThrow(NoSuchRentRequestException::new);
+
+        userAccessValidator.validateOwner(rent);
+
+        if (!rent.isRequested()) {
+            throw new CantRejectRentRequestException();
+        }
+
+        rent.setStatus(RentStatus.REVOKED_REQUEST);
         rentRepository.save(rent);
     }
 }

@@ -2,5 +2,5 @@ package com.lsm.ws.lease.domain.rent;
 
 public enum RentStatus {
 
-    REQUESTED, ACTIVE, REJECTED_REQUEST
+    REQUESTED, ACTIVE, REJECTED_REQUEST, REVOKED_REQUEST
 }

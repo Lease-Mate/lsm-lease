@@ -49,7 +49,7 @@ public class Rent {
         return requestDate;
     }
 
-    public boolean isEligibleToAccept() {
+    public boolean isRequested() {
         return status == RentStatus.REQUESTED;
     }
 }

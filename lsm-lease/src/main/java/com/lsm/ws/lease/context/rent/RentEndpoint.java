@@ -45,6 +45,15 @@ public class RentEndpoint {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Revoke rent request",
+            description = "Revokes rent request, request must be in status REQUESTED")
+    @PostMapping("/{rentId}/revoke")
+    public ResponseEntity<Void> revoke(@PathVariable String rentId) {
+
+        rentService.revoke(rentId);
+        return ResponseEntity.ok().build();
+    }
+
     @Operation(summary = GET_RENT_REQUESTS, description = GET_RENT_REQUESTS_DESC)
     @GetMapping("/{offerId}/request")
     public ResponseEntity<List<Rent>> getOfferRequests(@PathVariable String offerId,
