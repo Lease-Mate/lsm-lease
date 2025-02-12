@@ -1,5 +1,6 @@
 package com.lsm.ws.lease.context.rent;
 
+import com.lsm.ws.lease.configuration.exception.CantRejectRentRequestException;
 import com.lsm.ws.lease.configuration.exception.InactiveOfferException;
 import com.lsm.ws.lease.configuration.exception.NoSuchOfferException;
 import com.lsm.ws.lease.configuration.exception.NoSuchRentRequestException;
@@ -102,5 +103,22 @@ public class RentService {
 
     public List<Rent> getOwnerRequests() {
         return rentRepository.findByOwnerIdAndStatus(requestContext.userId(), RentStatus.REQUESTED);
+    }
+
+    public void reject(String offerId, String rentId) {
+        var offer = offerRepository.findById(offerId)
+                                   .orElseThrow(NoSuchOfferException::new);
+
+        userAccessValidator.validateOwner(offer);
+
+        var rent = rentRepository.findById(rentId)
+                                 .orElseThrow(NoSuchRentRequestException::new);
+
+        if (!rent.isEligibleToAccept()) {
+            throw new CantRejectRentRequestException();
+        }
+
+        rent.setStatus(RentStatus.REJECTED_REQUEST);
+        rentRepository.save(rent);
     }
 }

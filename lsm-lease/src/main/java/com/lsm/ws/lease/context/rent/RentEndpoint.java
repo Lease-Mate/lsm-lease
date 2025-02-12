@@ -63,6 +63,14 @@ public class RentEndpoint {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Reject rent", description = "Rejects rent request, rent status must be in REQUESTED status")
+    @PutMapping("/{offerId}/request/{rentId}/reject")
+    public ResponseEntity<Void> rejectRent(@PathVariable String offerId, @PathVariable String rentId) {
+
+        rentService.reject(offerId, rentId);
+        return ResponseEntity.ok().build();
+    }
+
     @Operation(summary = OWNER_RENTS, description = OWNER_RENTS_DESC)
     @GetMapping("/owner")
     public ResponseEntity<List<Rent>> getOwnerRents() {

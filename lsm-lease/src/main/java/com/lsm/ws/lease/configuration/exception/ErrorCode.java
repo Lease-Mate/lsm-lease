@@ -6,7 +6,8 @@ public enum ErrorCode {
     OFFER_ALREADY_RENTED("002", "Ogłoszenie nie aktualne"),
     OFFER_ALREADY_REQUESTED("003", "Wysłano już żądanie najmu"),
     RENT_ALREADY_ACCEPTED("004", "Ogłoszenie jest już w trakcie najmu"),
-    NO_SUCH_RENT_REQUEST("005", "Żądanie najmu nie istnieje");
+    NO_SUCH_RENT_REQUEST("005", "Żądanie najmu nie istnieje"),
+    RENT_REQUEST_CANT_BE_REJECTED("006", "Nie można odrzucić tej prośby");
 
     private static final String MICROSERVICE_PREFIX = "lsm-lease-";
     private final String code;
