@@ -6,6 +6,7 @@ import com.lsm.ws.lease.configuration.exception.NoSuchOfferException;
 import com.lsm.ws.lease.configuration.exception.NoSuchRentRequestException;
 import com.lsm.ws.lease.configuration.exception.RentAlreadyAcceptedException;
 import com.lsm.ws.lease.configuration.exception.RentAlreadyRequestedException;
+import com.lsm.ws.lease.context.payment.PaymentService;
 import com.lsm.ws.lease.domain.Pagination;
 import com.lsm.ws.lease.domain.offer.Offer;
 import com.lsm.ws.lease.domain.offer.OfferRepository;
@@ -13,6 +14,7 @@ import com.lsm.ws.lease.domain.rent.Rent;
 import com.lsm.ws.lease.domain.rent.RentRepository;
 import com.lsm.ws.lease.domain.rent.RentStatus;
 import com.lsm.ws.lease.infrastructure.rest.context.RequestContext;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,12 +29,14 @@ public class RentService {
     private final RentRepository rentRepository;
     private final RequestContext requestContext;
     private final UserAccessValidator userAccessValidator;
+    private final PaymentService paymentService;
 
-    public RentService(OfferRepository offerRepository, RentRepository rentRepository, RequestContext requestContext, UserAccessValidator userAccessValidator) {
+    public RentService(OfferRepository offerRepository, RentRepository rentRepository, RequestContext requestContext, UserAccessValidator userAccessValidator, PaymentService paymentService) {
         this.offerRepository = offerRepository;
         this.rentRepository = rentRepository;
         this.requestContext = requestContext;
         this.userAccessValidator = userAccessValidator;
+        this.paymentService = paymentService;
     }
 
     public void request(String offerId) {
@@ -70,6 +74,7 @@ public class RentService {
         return rentRepository.findByOfferIdAndStatus(offerId, RentStatus.REQUESTED, pagination);
     }
 
+    @Transactional
     public void accept(String offerId, String rentId) {
         var offer = offerRepository.findById(offerId)
                                    .orElseThrow(NoSuchOfferException::new);
@@ -84,6 +89,7 @@ public class RentService {
                                  .filter(Rent::isRequested)
                                  .orElseThrow(NoSuchRentRequestException::new);
 
+        paymentService.createPayment(rent);
         rent.setStatus(RentStatus.ACTIVE);
         rentRepository.save(rent);
     }

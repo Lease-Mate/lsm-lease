@@ -6,6 +6,8 @@ import com.lsm.ws.lease.domain.rent.Rent;
 import com.lsm.ws.lease.infrastructure.rest.context.RequestContext;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserAccessValidator {
 
@@ -23,6 +25,12 @@ public class UserAccessValidator {
 
     public void validateOwner(Rent rent) {
         if (!rent.getOwnerId().equals(requestContext.userId())) {
+            throw new ForbiddenException("Nie masz dostępu do tej oferty");
+        }
+    }
+
+    public void validateAccess(Rent rent) {
+        if (!List.of(rent.getOwnerId(), rent.getUserId()).contains(requestContext.userId())) {
             throw new ForbiddenException("Nie masz dostępu do tej oferty");
         }
     }
