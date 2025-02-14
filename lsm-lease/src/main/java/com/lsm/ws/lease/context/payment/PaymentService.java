@@ -9,7 +9,6 @@ import com.lsm.ws.lease.domain.payment.PaymentRepository;
 import com.lsm.ws.lease.domain.payment.PaymentStatus;
 import com.lsm.ws.lease.domain.rent.Rent;
 import com.lsm.ws.lease.domain.rent.RentRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -51,7 +50,6 @@ public class PaymentService {
         return paymentRepository.findByRentId(rentId);
     }
 
-    @Transactional
     public Payment payRent(String paymentId) {
         var payment = paymentRepository.getById(paymentId)
                                        .orElseThrow(NoSuchPaymentException::new);

@@ -14,8 +14,8 @@ import com.lsm.ws.lease.domain.rent.Rent;
 import com.lsm.ws.lease.domain.rent.RentRepository;
 import com.lsm.ws.lease.domain.rent.RentStatus;
 import com.lsm.ws.lease.infrastructure.rest.context.RequestContext;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,7 +48,7 @@ public class RentService {
                       .stream().findAny().ifPresent((rent) -> {
                           throw new InactiveOfferException();
                       });
-        rentRepository.findByUserIdAndStatus(requestContext.userId(), RentStatus.REQUESTED)
+        rentRepository.findRequestedUserRentForOffer(requestContext.userId(), offerId)
                       .stream().findAny().ifPresent((rent) -> {
                           throw new RentAlreadyRequestedException();
                       });
@@ -74,7 +74,6 @@ public class RentService {
         return rentRepository.findByOfferIdAndStatus(offerId, RentStatus.REQUESTED, pagination);
     }
 
-    @Transactional
     public void accept(String offerId, String rentId) {
         var offer = offerRepository.findById(offerId)
                                    .orElseThrow(NoSuchOfferException::new);
@@ -104,7 +103,7 @@ public class RentService {
 
     public List<Rent> getUserRequests() {
         return rentRepository.findByUserIdAndStatuses(requestContext.userId(),
-                Set.of(RentStatus.REQUESTED, RentStatus.REJECTED_REQUEST));
+                                                      Set.of(RentStatus.REQUESTED, RentStatus.REJECTED_REQUEST));
     }
 
     public List<Rent> getOwnerRequests() {
@@ -140,5 +139,10 @@ public class RentService {
 
         rent.setStatus(RentStatus.REVOKED_REQUEST);
         rentRepository.save(rent);
+    }
+
+    @Transactional(readOnly = false)
+    public void deleteRentsForOffer(String offerId) {
+        rentRepository.deleteForOfferId(offerId);
     }
 }

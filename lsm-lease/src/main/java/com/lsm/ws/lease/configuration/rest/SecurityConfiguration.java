@@ -48,7 +48,8 @@ public class SecurityConfiguration implements WebSecurityCustomizer {
            .requestMatchers(
                    "/swagger-ui/**",
                    "/v3/api-docs/**",
-                   "/manage/**");
+                   "/manage/**",
+                   "/v1/api/lease/internal/**");
     }
 
 }

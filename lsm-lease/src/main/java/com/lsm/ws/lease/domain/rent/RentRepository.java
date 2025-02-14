@@ -21,4 +21,8 @@ public interface RentRepository {
     List<Rent> findByUserIdAndStatuses(String userId, Set<RentStatus> statuses);
 
     List<Rent> findByOwnerIdAndStatus(String ownerId, RentStatus status);
+
+    void deleteForOfferId(String offerId);
+
+    Optional<Rent> findRequestedUserRentForOffer(String userId, String offerId);
 }

@@ -89,6 +89,23 @@ public class RentFacadeRepository implements RentRepository {
                                 .toList();
     }
 
+    @Override
+    public void deleteForOfferId(String offerId) {
+        var spec = Specification.where(hasOfferId(offerId));
+        rentJpaRepository.delete(spec);
+    }
+
+    @Override
+    public Optional<Rent> findRequestedUserRentForOffer(String userId, String offerId) {
+        var spec = Specification.where(hasUserId(userId))
+                                .and(hasOfferId(offerId))
+                                .and(hasStatus(RentStatus.REQUESTED));
+        return rentJpaRepository.findAll(spec)
+                                .stream()
+                                .findFirst()
+                                .map(RentEntity::toRent);
+    }
+
     private Specification<RentEntity> hasOwnerId(String ownerId) {
         return ((root, query, cb) -> cb.equal(root.get("ownerId"), ownerId));
     }
