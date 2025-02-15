@@ -31,7 +31,7 @@ public class UserAccessValidator {
 
     public void validateAccess(Rent rent) {
         if (!List.of(rent.getOwnerId(), rent.getUserId()).contains(requestContext.userId())) {
-            throw new ForbiddenException("Nie masz dostępu do tej oferty");
+            throw new ForbiddenException("Nie masz dostępu do tego najmu");
         }
     }
 }

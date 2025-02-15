@@ -109,4 +109,10 @@ public class RentEndpoint {
         var requests = rentService.getOwnerRequests();
         return ResponseEntity.ok(requests);
     }
+
+    @GetMapping("/{rentId}")
+    public ResponseEntity<Rent> getRent(@PathVariable String rentId) {
+        var rent = rentService.getRent(rentId);
+        return ResponseEntity.ok(rent);
+    }
 }

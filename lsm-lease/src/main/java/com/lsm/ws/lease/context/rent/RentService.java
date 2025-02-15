@@ -145,4 +145,11 @@ public class RentService {
     public void deleteRentsForOffer(String offerId) {
         rentRepository.deleteForOfferId(offerId);
     }
+
+    public Rent getRent(String rentId) {
+        var rent = rentRepository.findById(rentId)
+                                 .orElseThrow(NoSuchRentRequestException::new);
+        userAccessValidator.validateAccess(rent);
+        return rent;
+    }
 }
