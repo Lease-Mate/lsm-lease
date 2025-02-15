@@ -61,7 +61,7 @@ public class PaymentService {
         payment = paymentRepository.save(payment);
 
         var newPayment = new Payment(UUID.randomUUID().toString(),
-                                     payment.getId(),
+                                     payment.getRentId(),
                                      payment.getOwnerId(),
                                      payment.getOfferId(),
                                      payment.getUserId(),
