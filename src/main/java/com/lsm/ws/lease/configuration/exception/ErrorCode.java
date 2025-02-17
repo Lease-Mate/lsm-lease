@@ -9,7 +9,11 @@ public enum ErrorCode {
     NO_SUCH_RENT_REQUEST("005", "Żądanie najmu nie istnieje"),
     RENT_REQUEST_CANT_BE_REJECTED("006", "Nie można odrzucić tej prośby"),
     NO_SUCH_PAYMENT("007", "Płatność nie istnieje"),
-    ALREADY_PAID("007", "Płatność już opłacona"),;
+    ALREADY_PAID("007", "Płatność już opłacona"),
+    OFFER_ALREADY_PAID("008", "Oferta została już opłacona"),
+    OFFER_UNPAID("009", "Oferta nie została opłacona"),
+    COUNTRY_DOES_NOT_EXIST("010", "Kraj nie istnieje"),
+    REGION_DOES_NOT_EXIST("011", "Region nie istnieje");
 
     private static final String MICROSERVICE_PREFIX = "lsm-lease-";
     private final String code;

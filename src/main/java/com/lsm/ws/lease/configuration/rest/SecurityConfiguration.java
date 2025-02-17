@@ -27,7 +27,7 @@ public class SecurityConfiguration implements WebSecurityCustomizer {
     public SecurityConfiguration(JwtExtractor jwtExtractor, HandlerExceptionResolver handlerExceptionResolver,
                                  UserRepository userRepository) {
         this.jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtExtractor, userRepository,
-                handlerExceptionResolver);
+                                                                   handlerExceptionResolver);
     }
 
 
@@ -49,7 +49,8 @@ public class SecurityConfiguration implements WebSecurityCustomizer {
                    "/swagger-ui/**",
                    "/v3/api-docs/**",
                    "/manage/**",
-                   "/v1/api/lease/internal/**");
+                   "/v1/api/lease/internal/**",
+                   "/v1/api/lease/dictionary/**");
     }
 
 }

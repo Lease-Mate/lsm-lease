@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.3
+      author: fpamula
+      changes:
+        - createTable:
+            tableName: COUNTRY
+            columns:
+              - column:
+                  name: ISO_CODE
+                  type: char(3)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: LANG
+                  type: varchar(2)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: NAME
+                  type: varchar(64)
+                  constraints:
+                    nullable: false

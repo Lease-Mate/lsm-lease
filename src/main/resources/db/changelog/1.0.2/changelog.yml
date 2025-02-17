@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.2
+      author: fpamula
+      changes:
+        - createTable:
+            tableName: OFFER
+            columns:
+              - column:
+                  name: ID
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: APP_USER_ID
+                  type: char(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: TITLE
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DESCRIPTION
+                  type: varchar(2048)
+              - column:
+                  name: STATUS
+                  type: varchar(32)
+              - column:
+                  name: AVAILABLE_FROM
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: RENT
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ROOMS
+                  type: int
+              - column:
+                  name: SURFACE_AREA
+                  type: double
+              - column:
+                  name: FLOOR
+                  type: int
+              - column:
+                  name: LONGITUDE
+                  type: varchar(256)
+              - column:
+                  name: LATITUDE
+                  type: varchar(256)
+              - column:
+                  name: CITY
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: STREET
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ZIP_CODE
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: BUILDING_NUMBER
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: APARTMENT_NUMBER
+                  type: varchar(32)

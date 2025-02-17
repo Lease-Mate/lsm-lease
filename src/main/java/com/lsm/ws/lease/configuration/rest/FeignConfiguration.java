@@ -1,7 +1,6 @@
 package com.lsm.ws.lease.configuration.rest;
 
 import com.lsm.ws.lease.configuration.properties.FeignProperties;
-import com.lsm.ws.lease.infrastructure.rest.offer.OfferClient;
 import com.lsm.ws.lease.infrastructure.rest.user.UserClient;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +20,6 @@ public class FeignConfiguration {
     @Bean
     UserClient userClient() {
         return new UserClient(restClient(feignProperties.getUser()));
-    }
-
-    @Bean
-    OfferClient offerClient() {
-        return new OfferClient(restClient(feignProperties.getOffer()));
     }
 
     private WebClient restClient(FeignProperties.MicroserviceProperties properties) {

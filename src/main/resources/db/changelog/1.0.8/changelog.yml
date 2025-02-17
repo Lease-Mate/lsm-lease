@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.8
+      author: fpamula
+      changes:
+        - renameColumn:
+            tableName: offer
+            oldColumnName: thumbnailId
+            newColumnName: thumbnail_id

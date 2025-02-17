@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.9
+      author: fpamula
+      changes:
+        - addColumn:
+            tableName: offer
+            columns:
+              - column:
+                  name: country
+                  type: varchar(64)
+              - column:
+                  name: region
+                  type: varchar(64)

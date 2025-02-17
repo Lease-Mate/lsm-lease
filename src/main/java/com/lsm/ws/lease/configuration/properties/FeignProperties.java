@@ -14,23 +14,12 @@ public class FeignProperties {
     @NotNull
     private MicroserviceProperties user;
 
-    @NotNull
-    private MicroserviceProperties offer;
-
     public @NotNull MicroserviceProperties getUser() {
         return user;
     }
 
     public void setUser(@NotNull MicroserviceProperties user) {
         this.user = user;
-    }
-
-    public @NotNull MicroserviceProperties getOffer() {
-        return offer;
-    }
-
-    public void setOffer(@NotNull MicroserviceProperties offer) {
-        this.offer = offer;
     }
 
     public static class MicroserviceProperties {

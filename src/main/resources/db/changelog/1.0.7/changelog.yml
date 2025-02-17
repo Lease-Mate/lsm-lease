@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.7
+      author: fpamula
+      changes:
+        - addColumn:
+            tableName: offer
+            columns:
+              - column:
+                  name: thumbnailId
+                  type: char(36)

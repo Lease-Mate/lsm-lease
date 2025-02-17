@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.6
+      author: fpamula
+      changes:
+        - dropNotNullConstraint:
+            tableName: offer
+            columnName: title
+        - dropNotNullConstraint:
+            tableName: offer
+            columnName: available_from
+        - dropNotNullConstraint:
+            tableName: offer
+            columnName: rent
+        - dropNotNullConstraint:
+            tableName: offer
+            columnName: city
+        - dropNotNullConstraint:
+            tableName: offer
+            columnName: street
+        - dropNotNullConstraint:
+            tableName: offer
+            columnName: zip_code
+        - dropNotNullConstraint:
+            tableName: offer
+            columnName: building_number

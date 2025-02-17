@@ -1,0 +1,16 @@
+INSERT INTO region values ('abd2e854-8408-4b02-b760-bdf8f35f2ff5', 'POL', 'PL', 'dolnośląskie');
+INSERT INTO region values ('a02d91ab-49f4-43e1-b034-db971eb0dcc7', 'POL', 'PL', 'kujawsko-pomorskie');
+INSERT INTO region values ('3b48610f-bd99-4dfb-81d8-412de3c60516', 'POL', 'PL', 'lubelskie');
+INSERT INTO region values ('37d9c07a-399e-4d02-acc4-6b00071dec9f', 'POL', 'PL', 'lubuskie');
+INSERT INTO region values ('0748896a-cac2-4474-bac3-4f0f8d68b55a', 'POL', 'PL', 'łódzkie');
+INSERT INTO region values ('aa22d1e0-52eb-4cee-b5e3-f2ac840d8cc3', 'POL', 'PL', 'małopolskie');
+INSERT INTO region values ('6a8ae2a5-84a5-4ac9-9d94-5a1fcd275693', 'POL', 'PL', 'mazowieckie');
+INSERT INTO region values ('06a15e39-7a0f-440d-920a-ff6992e2dd37', 'POL', 'PL', 'opolskie');
+INSERT INTO region values ('ed3fda9d-381d-47a7-9541-e0d55f5f460a', 'POL', 'PL', 'podkarpackie');
+INSERT INTO region values ('98835c14-385b-41f6-aeb1-817f9db1d5f7', 'POL', 'PL', 'podlaskie');
+INSERT INTO region values ('d31cbaf2-93ee-43cc-b1f6-0e6c64d938bb', 'POL', 'PL', 'pomorskie');
+INSERT INTO region values ('847fef4e-ddaf-48af-9ca8-85f64d280027', 'POL', 'PL', 'śląskie');
+INSERT INTO region values ('0ea6545e-a704-4b33-8c9b-a6aa0aa245b0', 'POL', 'PL', 'świętokrzyskie');
+INSERT INTO region values ('d9651e65-9125-413a-b84e-8d508c4da0b9', 'POL', 'PL', 'warmińsko-mazurskie');
+INSERT INTO region values ('55c9996d-a74e-46d5-8709-4ff8e80e81ec', 'POL', 'PL', 'wielkopolskie');
+INSERT INTO region values ('012227a5-c2b5-4732-88a6-cd862cf56339', 'POL', 'PL', 'zachodniopomorskie');

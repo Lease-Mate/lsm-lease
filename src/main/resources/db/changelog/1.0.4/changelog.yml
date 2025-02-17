@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.4
+      author: fpamula
+      changes:
+        - createTable:
+            tableName: REGION
+            columns:
+              - column:
+                  name: ID
+                  type: char(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: COUNTRY_ISO_CODE
+                  type: char(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LANG
+                  type: varchar(2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: NAME
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: "fk_region_country"
+            baseTableName: region
+            baseColumnNames: country_iso_code, lang
+            referencedTableName: country
+            referencedColumnNames: iso_code, lang
