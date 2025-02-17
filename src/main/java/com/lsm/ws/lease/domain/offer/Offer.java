@@ -132,4 +132,8 @@ public class Offer {
     public boolean isPublished() {
         return status == OfferStatus.PUBLISHED;
     }
+
+    public boolean canBeUpdated() {
+        return status != OfferStatus.DURING_RENT;
+    }
 }

@@ -13,7 +13,8 @@ public enum ErrorCode {
     OFFER_ALREADY_PAID("008", "Oferta została już opłacona"),
     OFFER_UNPAID("009", "Oferta nie została opłacona"),
     COUNTRY_DOES_NOT_EXIST("010", "Kraj nie istnieje"),
-    REGION_DOES_NOT_EXIST("011", "Region nie istnieje");
+    REGION_DOES_NOT_EXIST("011", "Region nie istnieje"),
+    OFFER_CANT_BE_UPDATED("012", "Oferta nie może zostać aktualizowana");
 
     private static final String MICROSERVICE_PREFIX = "lsm-lease-";
     private final String code;

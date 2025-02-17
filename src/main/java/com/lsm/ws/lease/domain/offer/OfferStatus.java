@@ -4,5 +4,6 @@ public enum OfferStatus {
 
     UNPAID,
     PAID,
-    PUBLISHED
+    PUBLISHED,
+    DURING_RENT
 }

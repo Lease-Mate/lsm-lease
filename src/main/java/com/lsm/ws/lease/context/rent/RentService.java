@@ -10,6 +10,7 @@ import com.lsm.ws.lease.context.payment.PaymentService;
 import com.lsm.ws.lease.domain.Pagination;
 import com.lsm.ws.lease.domain.offer.Offer;
 import com.lsm.ws.lease.domain.offer.OfferRepository;
+import com.lsm.ws.lease.domain.offer.OfferStatus;
 import com.lsm.ws.lease.domain.rent.Rent;
 import com.lsm.ws.lease.domain.rent.RentRepository;
 import com.lsm.ws.lease.domain.rent.RentStatus;
@@ -74,6 +75,7 @@ public class RentService {
         return rentRepository.findByOfferIdAndStatus(offerId, RentStatus.REQUESTED, pagination);
     }
 
+    @Transactional
     public void accept(String offerId, String rentId) {
         var offer = offerRepository.findById(offerId)
                                    .orElseThrow(NoSuchOfferException::new);
@@ -91,6 +93,8 @@ public class RentService {
         paymentService.createPayment(rent);
         rent.setStatus(RentStatus.ACTIVE);
         rentRepository.save(rent);
+        offer.setStatus(OfferStatus.DURING_RENT);
+        offerRepository.save(offer);
     }
 
     public List<Rent> getOwnerRents() {

@@ -2,6 +2,7 @@ package com.lsm.ws.lease.context.offer;
 
 import com.lsm.ws.lease.configuration.exception.NoSuchOfferException;
 import com.lsm.ws.lease.configuration.exception.OfferAlreadyPaidException;
+import com.lsm.ws.lease.configuration.exception.OfferCantBeUpdatedException;
 import com.lsm.ws.lease.configuration.exception.OfferUnpaidException;
 import com.lsm.ws.lease.context.offer.dto.UpdateOfferRequest;
 import com.lsm.ws.lease.domain.Pagination;
@@ -38,6 +39,11 @@ public class OfferService {
         var offer = offerRepository.findById(offerId)
                                    .filter(o -> requestContext.userId().equals(o.getAppUserId()))
                                    .orElseThrow(NoSuchOfferException::new);
+
+        if (!offer.canBeUpdated()){
+            throw new OfferCantBeUpdatedException();
+        }
+
         return offerRepository.save(request.toOffer(offer));
     }
 
