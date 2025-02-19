@@ -5,7 +5,6 @@ import com.lsm.ws.lease.context.offer.dto.OfferDetailsDto;
 import com.lsm.ws.lease.context.offer.dto.OfferDto;
 import com.lsm.ws.lease.context.offer.dto.UpdateOfferRequest;
 import com.lsm.ws.lease.domain.offer.OfferFilter;
-import com.lsm.ws.lease.domain.offer.OfferRepository;
 import com.lsm.ws.lease.domain.offer.OfferStatus;
 import com.lsm.ws.lease.infrastructure.rest.PaginationSpecification;
 import com.lsm.ws.lease.infrastructure.rest.context.RequestContext;
@@ -39,8 +38,6 @@ public class OfferInfoEndpoint {
     private static final String CREATE_DESC = "creates new offer, requires jwt token";
     private static final String SEARCH_SUMMARY = "Search offers";
     private static final String SEARCH_DESC = "searches for offers, returns paginated list of offers";
-    private static final String INTERNAL_OFFER_SUMMARY = "Get active offer offers";
-    private static final String INTERNAL_OFFER_DESC = "returns active offer if exists";
     private static final String DELETE_OFFER_SUMMARY = "Delete offer";
     private static final String DELETE_OFFER_DESC = "searches for offers, returns paginated list of offers";
     private static final String PUBLISH_OFFER_SUMMARY = "Publish offer";
@@ -49,29 +46,33 @@ public class OfferInfoEndpoint {
     private static final String PAY_OFFER_DESC = "marks offer as paid, requires offer owner's jwt token";
 
     private final OfferService offerService;
-    private final OfferRepository offerRepository;
     private final RequestContext requestContext;
 
-    public OfferInfoEndpoint(OfferService offerService, OfferRepository offerRepository,
-                             RequestContext requestContext) {
+    public OfferInfoEndpoint(OfferService offerService, RequestContext requestContext) {
         this.offerService = offerService;
-        this.offerRepository = offerRepository;
         this.requestContext = requestContext;
     }
 
     @Operation(summary = CREATE_SUMMARY, description = CREATE_DESC)
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<IdWrapperDto> createOffer() {
         var offer = offerService.createOffer();
         return ResponseEntity.ok(IdWrapperDto.from(offer));
     }
 
     @Operation(summary = UPDATE_SUMMARY, description = UPDATE_DESC)
-    @PutMapping("/{offerId}")
+    @PutMapping("/{offerId}/update")
     public ResponseEntity<OfferDto> addOffer(@PathVariable String offerId,
                                              @Valid @RequestBody UpdateOfferRequest request) {
         // TODO: 23/10/2024 map request to domain object e.g. AddOfferCommand
         var offer = offerService.updateOffer(offerId, request);
+        return ResponseEntity.ok(OfferDto.from(offer));
+    }
+
+    @Operation(summary = "Informacje o ofercie", description = "Zwraca informacje o ofercie, nie wymaga JWT")
+    @GetMapping("/{offerId}")
+    public ResponseEntity<OfferDto> getById(@PathVariable String offerId) {
+        var offer = offerService.getOffer(offerId);
         return ResponseEntity.ok(OfferDto.from(offer));
     }
 

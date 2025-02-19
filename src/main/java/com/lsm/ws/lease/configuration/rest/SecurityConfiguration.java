@@ -51,7 +51,8 @@ public class SecurityConfiguration implements WebSecurityCustomizer {
                    "/manage/**",
                    "/v1/api/lease/internal/**",
                    "/v1/api/lease/dictionary/**",
-                   "/v1/api/lease/offer/available/search");
+                   "/v1/api/lease/offer/available/search",
+                   "/v1/api/lease/offer/*");
     }
 
 }

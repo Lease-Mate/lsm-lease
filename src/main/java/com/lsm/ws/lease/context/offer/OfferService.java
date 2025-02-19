@@ -40,7 +40,7 @@ public class OfferService {
                                    .filter(o -> requestContext.userId().equals(o.getAppUserId()))
                                    .orElseThrow(NoSuchOfferException::new);
 
-        if (!offer.canBeUpdated()){
+        if (!offer.canBeUpdated()) {
             throw new OfferCantBeUpdatedException();
         }
 
@@ -95,5 +95,10 @@ public class OfferService {
         offer.setStatus(OfferStatus.PAID);
         return offerRepository.save(offer);
 
+    }
+
+    public Offer getOffer(String offerId) {
+        return offerRepository.findById(offerId)
+                              .orElseThrow(NoSuchOfferException::new);
     }
 }
