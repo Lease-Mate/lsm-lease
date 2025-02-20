@@ -20,24 +20,13 @@ import java.util.List;
 @RequestMapping("/v1/api/lease/rent")
 public class RentEndpoint {
 
-    private static final String REQUEST_RENT = "Request rent";
-    private static final String REQUEST_RENT_DESC = "sends request to rent specified offer";
-    private static final String GET_RENT_REQUESTS = "Rent requests";
-    private static final String GET_RENT_REQUESTS_DESC = "returns paginated list of rent requests for specified offer";
-    private static final String ACCEPT_RENT = "Accept rent";
-    private static final String ACCEPT_RENT_DESC = "accepts rent request";
-    private static final String OWNER_RENTS = "Owner rents";
-    private static final String OWNER_RENTS_DESC = "returns rents that user owns";
-    private static final String RENTS = "User rents";
-    private static final String RENTS_DESC = "returns rents that user rents";
-
     private final RentService rentService;
 
     public RentEndpoint(RentService rentService) {
         this.rentService = rentService;
     }
 
-    @Operation(summary = REQUEST_RENT, description = REQUEST_RENT_DESC)
+    @Operation(summary = "Zapytanie wynajmu", description = "Wysyła zapytanie wynajmu do właściciela, wymaga tokenu JWT")
     @PostMapping("/{offerId}/request")
     public ResponseEntity<Void> requestRent(@PathVariable String offerId) {
 
@@ -45,8 +34,8 @@ public class RentEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Revoke rent request",
-            description = "Revokes rent request, request must be in status REQUESTED")
+    @Operation(summary = "Cofnij zapytanie wynajmu",
+            description = "Cofa zapytanie wynajmu, wymaga tokenu JWT")
     @PostMapping("/{rentId}/revoke")
     public ResponseEntity<Void> revoke(@PathVariable String rentId) {
 
@@ -54,7 +43,8 @@ public class RentEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = GET_RENT_REQUESTS, description = GET_RENT_REQUESTS_DESC)
+    @Operation(summary = "Pobierz zapytania wynajmu",
+            description = "Zwraca listę zapytań wynajmu dla danej oferty, wymaga tokenu JWT")
     @GetMapping("/{offerId}/request")
     public ResponseEntity<List<Rent>> getOfferRequests(@PathVariable String offerId,
                                                        @ParameterObject
@@ -64,7 +54,8 @@ public class RentEndpoint {
         return ResponseEntity.ok(requests);
     }
 
-    @Operation(summary = ACCEPT_RENT, description = ACCEPT_RENT_DESC)
+    @Operation(summary = "Zaakceptuj żądanie wynajmu",
+            description = "Akceptuje żądanie wynajmu, rozpoczyna proces płatności, wymaga tokenu JWT")
     @PutMapping("/{offerId}/request/{rentId}/accept")
     public ResponseEntity<Void> acceptRent(@PathVariable String offerId, @PathVariable String rentId) {
 
@@ -72,7 +63,7 @@ public class RentEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Reject rent", description = "Rejects rent request, rent status must be in REQUESTED status")
+    @Operation(summary = "Odrzuć żądanie", description = "Odrzuca zapytanie wynajmu, wymaga tokenu JWT")
     @PutMapping("/{offerId}/request/{rentId}/reject")
     public ResponseEntity<Void> rejectRent(@PathVariable String offerId, @PathVariable String rentId) {
 
@@ -80,21 +71,21 @@ public class RentEndpoint {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = OWNER_RENTS, description = OWNER_RENTS_DESC)
+    @Operation(summary = "Pobierz wynajmy", description = "Zwraca listę wynajmów, wymaga tokenu JWT")
     @GetMapping("/owner")
     public ResponseEntity<List<Rent>> getOwnerRents() {
         var rents = rentService.getOwnerRents();
         return ResponseEntity.ok(rents);
     }
 
-    @Operation(summary = RENTS, description = RENTS_DESC)
+    @Operation(summary = "Pobierz najmy", description = "Zwraca listę najmów, wymaga tokenu JWT")
     @GetMapping()
     public ResponseEntity<List<Rent>> getUserRents() {
         var rents = rentService.getUserRents();
         return ResponseEntity.ok(rents);
     }
 
-    @Operation(summary = "Get user requests", description = "Returns user requests to rent")
+    @Operation(summary = "Pobierz żądania najmu", description = "Zwraca listę żądań najmów, wymaga tokenu JWT")
     @GetMapping("/request")
     public ResponseEntity<List<Rent>> getUserRequests() {
 
@@ -102,7 +93,8 @@ public class RentEndpoint {
         return ResponseEntity.ok(requests);
     }
 
-    @Operation(summary = "Get owner requests", description = "Returns rent requests for owner")
+    @Operation(summary = "Pobierz żądania wynajmu",
+            description = "Zwraca listę żądań najmów od strony właściciela, wymaga tokenu JWT")
     @GetMapping("/request/owner")
     public ResponseEntity<List<Rent>> getOwnerRequests() {
 
@@ -110,6 +102,8 @@ public class RentEndpoint {
         return ResponseEntity.ok(requests);
     }
 
+    @Operation(summary = "Pobierz informacje o najmie",
+            description = "Zwraca informacje o najmie, wymaga tokenu JWT")
     @GetMapping("/{rentId}")
     public ResponseEntity<Rent> getRent(@PathVariable String rentId) {
         var rent = rentService.getRent(rentId);

@@ -25,32 +25,25 @@ import java.util.List;
 @RequestMapping("/v1/api/lease/dictionary")
 public class DictionaryEndpoint {
 
-    private static final String COUNTRIES_SUMMARY = "Get supported countries";
-    private static final String COUNTRIES_DESC = "returns supported countries";
-    private static final String REGIONS_SUMMARY = "Get supported regions";
-    private static final String REGIONS_DESC = "returns supported regions";
-    private static final String CITIES_SUMMARY = "Get supported cities";
-    private static final String CITIES_DESC = "returns supported cities";
-
     private final DictionaryRepository dictionaryRepository;
 
     public DictionaryEndpoint(DictionaryRepository dictionaryRepository) {
         this.dictionaryRepository = dictionaryRepository;
     }
 
-    @Operation(summary = COUNTRIES_SUMMARY, description = COUNTRIES_DESC)
+    @Operation(summary = "Pobierz wspierane kraje", description = "Zwraca listę wspieranych krajów")
     @GetMapping("/countries")
     public List<Country> countries(@RequestHeader @NotNull Language lang) {
         return dictionaryRepository.getCountries(lang);
     }
 
-    @Operation(summary = "Get country name", description = "returns name for specified country")
+    @Operation(summary = "Pobierz nazwę kraju", description = "Zwraca nazwę kraju")
     @GetMapping("/countries/{countryCode}/name")
     public ResponseEntity<Country> countryName(@RequestHeader @NotNull Language lang, @PathVariable String countryCode) {
         return ResponseEntity.of(dictionaryRepository.getCountry(countryCode, lang));
     }
 
-    @Operation(summary = REGIONS_SUMMARY, description = REGIONS_DESC)
+    @Operation(summary = "Pobierz wspierane regiony", description = "Zwraca listę wspieranych regionów")
     @GetMapping("/countries/{countryCode}/regions")
     public List<Region> regions(@PathVariable @NotEmpty String countryCode,
                                 @RequestHeader @NotNull Language lang) {
@@ -61,7 +54,7 @@ public class DictionaryEndpoint {
         return dictionaryRepository.getRegions(countryCode, lang);
     }
 
-    @Operation(summary = CITIES_SUMMARY, description = CITIES_DESC)
+    @Operation(summary = "Pobierz wspierane miasta", description = "Zwraca listę wspieranych miast")
     @GetMapping("/regions/{regionId}/cities")
     public List<City> cities(@PathVariable @NotEmpty String regionId,
                              @RequestHeader @NotNull Language lang) {
@@ -72,13 +65,13 @@ public class DictionaryEndpoint {
         return dictionaryRepository.getCities(regionId, lang);
     }
 
-    @Operation(summary = "Get region name", description = "returns name for specified region")
+    @Operation(summary = "Pobierz nazwę regionu", description = "Zwraca nazwę regionu")
     @GetMapping("/regions/{regionId}/name")
     public ResponseEntity<Region> regionName(@RequestHeader @NotNull Language lang, @PathVariable String regionId) {
         return ResponseEntity.of(dictionaryRepository.getRegion(regionId, lang));
     }
 
-    @Operation(summary = "Get city name", description = "returns name for specified city")
+    @Operation(summary = "Pobierz nazwę miasta", description = "Zwraca nazwę miasta")
     @GetMapping("/cities/{cityId}/name")
     public ResponseEntity<City> cityName(@RequestHeader @NotNull Language lang, @PathVariable String cityId) {
         return ResponseEntity.of(dictionaryRepository.getCity(cityId, lang));

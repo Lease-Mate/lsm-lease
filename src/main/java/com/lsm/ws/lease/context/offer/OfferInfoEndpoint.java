@@ -53,14 +53,14 @@ public class OfferInfoEndpoint {
         this.requestContext = requestContext;
     }
 
-    @Operation(summary = CREATE_SUMMARY, description = CREATE_DESC)
+    @Operation(summary = "Utwórz ofertę", description = "Tworzy ofertę, wymaga tokenu JWT")
     @PostMapping("/create")
     public ResponseEntity<IdWrapperDto> createOffer() {
         var offer = offerService.createOffer();
         return ResponseEntity.ok(IdWrapperDto.from(offer));
     }
 
-    @Operation(summary = UPDATE_SUMMARY, description = UPDATE_DESC)
+    @Operation(summary = "Zaktualizuj ofertę", description = "Aktualizuje ofertę, wymaga tokenu JWT")
     @PutMapping("/{offerId}/update")
     public ResponseEntity<OfferDto> addOffer(@PathVariable String offerId,
                                              @Valid @RequestBody UpdateOfferRequest request) {
@@ -76,7 +76,7 @@ public class OfferInfoEndpoint {
         return ResponseEntity.ok(OfferDto.from(offer));
     }
 
-    @Operation(summary = SEARCH_SUMMARY, description = SEARCH_DESC)
+    @Operation(summary = "Wyszukaj dostępne oferty", description = "Zwraca listę dostępnych ofert")
     @GetMapping("/available/search")
     public ResponseEntity<List<OfferDto>> searchOffers(@RequestParam(required = false) String country,
                                                        @RequestParam(required = false) String city,
@@ -106,14 +106,15 @@ public class OfferInfoEndpoint {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = DELETE_OFFER_SUMMARY, description = DELETE_OFFER_DESC)
+    @Operation(summary = "Usuń ofertę", description = "Usuwa ofertę")
     @DeleteMapping("/{offerId}")
     public ResponseEntity<Void> deleteOffer(@PathVariable String offerId) {
         offerService.delete(offerId);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = SEARCH_SUMMARY, description = SEARCH_DESC)
+    @Operation(summary = "Wyszukaj oferty użytkownika",
+            description = "Zwraca listę ofert dodanych przez użytkownika, wymaga tokenu JWT")
     @GetMapping("/user/search")
     public ResponseEntity<List<OfferDetailsDto>> userOffersSearch(@ParameterObject
                                                                   PaginationSpecification paginationSpecification) {
@@ -129,21 +130,21 @@ public class OfferInfoEndpoint {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = PUBLISH_OFFER_SUMMARY, description = PUBLISH_OFFER_DESC)
+    @Operation(summary = "Opublikuj ofertę", description = "Publikuje ofertę, wymaga tokenu JWT")
     @PostMapping("/{offerId}/publish")
     public ResponseEntity<OfferDetailsDto> publishOffer(@PathVariable String offerId) {
         var response = OfferDetailsDto.from(offerService.publish(offerId));
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Unpublish offer", description = "sets offer status to PAID, requires offer owner's jwt token")
+    @Operation(summary = "Ukryj ofertę", description = "Cofa publikacje oferty, wymaga tokenu JWT")
     @PostMapping("/{offerId}/unpublish")
     public ResponseEntity<OfferDetailsDto> unPublishOffer(@PathVariable String offerId) {
         var response = OfferDetailsDto.from(offerService.unpublish(offerId));
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = PAY_OFFER_SUMMARY, description = PAY_OFFER_DESC)
+    @Operation(summary = "Opłać ofertę", description = "Opłaca ofertę, wymaga tokenu JWT")
     @PostMapping("/{offerId}/pay")
     public ResponseEntity<OfferDetailsDto> payOffer(@PathVariable String offerId) {
         var response = OfferDetailsDto.from(offerService.pay(offerId));

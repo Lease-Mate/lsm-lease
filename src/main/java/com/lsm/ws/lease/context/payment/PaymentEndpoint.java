@@ -22,14 +22,14 @@ public class PaymentEndpoint {
         this.paymentService = paymentService;
     }
 
-    @Operation(summary = "Get rent payments", description = "returns all rent payments for owner and user")
+    @Operation(summary = "Pobierz czynsze", description = "Zwraca listę płatności czynszu, wymaga tokenu JWT")
     @PostMapping("/{rentId}/all")
     public ResponseEntity<List<Payment>> requestRent(@PathVariable String rentId) {
         var payments = paymentService.getAllPaymentsForRent(rentId);
         return ResponseEntity.ok(payments);
     }
 
-    @Operation(summary = "Pay rent", description = "pays rent, only for user that rents")
+    @Operation(summary = "Opłać czynsz", description = "Opłaca czynsz za bieżący miesiąc, wymaga tokenu JWT")
     @PostMapping("/{paymentId}/pay")
     public ResponseEntity<Payment> payRent(@PathVariable String paymentId) {
         var payment = paymentService.payRent(paymentId);
