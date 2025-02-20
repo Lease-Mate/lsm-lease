@@ -27,23 +27,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Tag(name = "Offer services")
+@Tag(name = "Oferty")
 @RestController
 @RequestMapping("/v1/api/lease/offer")
 public class OfferInfoEndpoint {
-
-    private static final String UPDATE_SUMMARY = "Update offer";
-    private static final String UPDATE_DESC = "updates offer, requires jwt token";
-    private static final String CREATE_SUMMARY = "Create offer";
-    private static final String CREATE_DESC = "creates new offer, requires jwt token";
-    private static final String SEARCH_SUMMARY = "Search offers";
-    private static final String SEARCH_DESC = "searches for offers, returns paginated list of offers";
-    private static final String DELETE_OFFER_SUMMARY = "Delete offer";
-    private static final String DELETE_OFFER_DESC = "searches for offers, returns paginated list of offers";
-    private static final String PUBLISH_OFFER_SUMMARY = "Publish offer";
-    private static final String PUBLISH_OFFER_DESC = "publishes offer, requires offer owner's jwt token";
-    private static final String PAY_OFFER_SUMMARY = "Pay for publishing the offer";
-    private static final String PAY_OFFER_DESC = "marks offer as paid, requires offer owner's jwt token";
 
     private final OfferService offerService;
     private final RequestContext requestContext;

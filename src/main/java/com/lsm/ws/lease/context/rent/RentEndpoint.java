@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name = "Rent services")
+@Tag(name = "Najem")
 @RestController
 @RequestMapping("/v1/api/lease/rent")
 public class RentEndpoint {

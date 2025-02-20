@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name = "Dictionary")
+@Tag(name = "Słownik")
 @RestController
 @RequestMapping("/v1/api/lease/dictionary")
 public class DictionaryEndpoint {
