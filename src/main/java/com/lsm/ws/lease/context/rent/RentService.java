@@ -135,7 +135,7 @@ public class RentService {
         var rent = rentRepository.findById(rentId)
                                  .orElseThrow(NoSuchRentRequestException::new);
 
-        userAccessValidator.validateOwner(rent);
+        userAccessValidator.validateRequester(rent);
 
         if (!rent.isRequested()) {
             throw new CantRejectRentRequestException();

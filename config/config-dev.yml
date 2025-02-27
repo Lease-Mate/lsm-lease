@@ -9,5 +9,3 @@ jwt:
 feign:
   user:
     url: http://localhost:8041
-  offer:
-    url: http://localhost:8042

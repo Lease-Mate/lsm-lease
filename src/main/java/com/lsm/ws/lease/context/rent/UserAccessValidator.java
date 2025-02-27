@@ -34,4 +34,10 @@ public class UserAccessValidator {
             throw new ForbiddenException("Nie masz dostępu do tego najmu");
         }
     }
+
+    public void validateRequester(Rent rent) {
+        if (!rent.getUserId().equals(requestContext.userId())) {
+            throw new ForbiddenException("Nie masz dostępu do tego najmu");
+        }
+    }
 }
